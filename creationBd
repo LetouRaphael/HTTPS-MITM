@@ -1,0 +1,44 @@
+##############################
+
+CREATE TABLE SITES
+(
+    idSite serial PRIMARY KEY UNIQUE NOT NULL,
+    nom VARCHAR(100) UNIQUE NOT NULL,
+    blacked boolean NOT NULL DEFAULT FALSE  
+);
+
+
+CREATE TABLE ATTAQUES
+(
+	idAttaque serial PRIMARY KEY UNIQUE NOT NULL
+);
+
+CREATE TABLE COMPTES
+(
+    idCompte serial PRIMARY KEY UNIQUE NOT NULL,
+    username VARCHAR(100) NOT NULL,
+  pass VARCHAR(100) NOT NULL,
+     refSite INTEGER NOT NULL REFERENCES SITES ON UPDATE CASCADE ON DELETE CASCADE,
+  refAttaque INTEGER NOT NULL REFERENCES ATTAQUES ON UPDATE CASCADE ON DELETE RESTRICT,
+  cookie    TEXT  UNIQUE DEFAULT NULL 
+
+);
+
+
+
+########################### Exemple ######################################
+
+INSERT INTO SITES (nom) VALUES ('www.facebook.com'),('www.leboncoin.com'),('www.google.com');
+INSERT INTO ATTAQUES (idAttaque) VALUES (1),(2);
+
+
+INSERT INTO COMPTES (username,pass,refSite,refAttaque) VALUES ('admin','pass',1,1),('root','Linux',1,1),('raphael','123456',2,1),
+						('admin','pass',2,1),('root','Linux',2,1),('raphael','123456',1,1),('user','password',2,1),('azerty','querty',3,2);
+
+############################################
+
+
+
+
+
+
